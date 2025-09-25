@@ -1,0 +1,27 @@
+.main-timeline {
+    flex-grow: 1;
+    margin: 20px;
+    width: 50%;
+}
+
+.post {
+    border: solid;
+    border-radius: 30px;
+    border-color: green;
+    padding: 15px;
+    background-color: rgb(215, 253, 215);
+    color: green;
+    margin-bottom: 10px;
+}
+
+.account-display {
+    display: flex;
+}
+
+.pfp {
+    margin: 5px 25px;
+}
+
+.description {
+    margin-left: 30px;
+}

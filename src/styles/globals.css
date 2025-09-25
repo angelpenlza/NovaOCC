@@ -1,9 +1,42 @@
 body {
-  background-color: rgb(255, 251, 239);
+  background-color: rgb(239, 239, 239);
+  margin: 0;
 }
 
 .navbar {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+
+  border-bottom: solid;
+  margin: 0;
+  padding: 0;
 }
+
+.navitem, .title {
+  color: black;
+  text-decoration: none;
+  padding: 20px;
+}
+
+.navitem {
+  flex-grow: 1;
+  text-align: center;
+}
+
+.title {
+  flex-grow: 2;
+  font-weight: bolder;
+  font-size: 30px;
+  color: rgb(222, 0, 0);
+}
+
+.navitem:hover {
+  background-color: rgb(214, 214, 214);
+}
+
+.main {
+  display: flex;
+  justify-content: space-evenly;
+}
+

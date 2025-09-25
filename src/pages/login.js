@@ -1,10 +1,10 @@
 import NavBar from "./components/navbar";
 
-export default function News() {
+export default function Report() {
     return (
       <div>
         <NavBar />
-        <h1>News</h1>
+        <h1>Login</h1>
       </div>
     );
   }

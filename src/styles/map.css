@@ -1,0 +1,16 @@
+.map-placeholder {
+    width: 50%;
+    height: 500px;
+    line-height: 500px;
+    margin: 20px;
+
+    border: solid;
+    border-color: blue;
+    border-radius: 30px;
+
+    text-align: center;
+    background-color: rgb(210, 210, 255);
+    color: blue;
+
+    flex-grow: 1;
+}
