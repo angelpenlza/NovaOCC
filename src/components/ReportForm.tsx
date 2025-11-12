@@ -55,7 +55,48 @@ export default function ReportForm() {
         }
       );
 
-      if (!rpcError && reportId) {
+      if (rpcError) {
+        // Check if the error is about the function not being found
+        const errorMessage = rpcError.message || '';
+        if (
+          errorMessage.includes('schema cache') ||
+          errorMessage.includes('function') ||
+          errorMessage.includes('not found') ||
+          errorMessage.includes('Could not find')
+        ) {
+          alert(
+            'Error submitting report: Could not find the function\n' +
+              'public.insert_report(p_address_text, p_category, p_description, p_lat,\n' +
+              'p_lon, p_title, p_user_id) in the schema cache\n\n' +
+              'Please ensure you have run the database migration\n' +
+              '(supabase_migrations.sql) in your Supabase SQL Editor.'
+          );
+          setLoading(false);
+          return;
+        }
+        
+        // Check for foreign key constraint violation
+        if (
+          errorMessage.includes('foreign key constraint') ||
+          errorMessage.includes('reports_user_id_fkey') ||
+          errorMessage.includes('violates foreign key')
+        ) {
+          alert(
+            'Error submitting report: Foreign key constraint violation.\n\n' +
+              'The reports table has a foreign key constraint on user_id that\n' +
+              'references a table that doesn\'t exist or doesn\'t include your user.\n\n' +
+              'Solution: Run the fix_foreign_key.sql migration in your\n' +
+              'Supabase SQL Editor to remove the constraint.\n\n' +
+              'Alternatively, if you have a users table, ensure your user\n' +
+              'exists in that table, or change the foreign key to reference auth.users.'
+          );
+          setLoading(false);
+          return;
+        }
+        
+        // For other RPC errors, try fallback
+        console.warn('RPC function error, trying alternative method...', rpcError);
+      } else if (reportId) {
         // Success using RPC function
         alert('Report submitted successfully!');
         router.push('/');
@@ -72,11 +113,27 @@ export default function ReportForm() {
 
       if (geomError) {
         console.error('Error creating geometry:', geomError);
-        alert(
-          'Error submitting report: ' +
-            (rpcError?.message || geomError.message) +
-            '\n\nPlease ensure you have run the database migration (supabase_migrations.sql) in your Supabase SQL Editor.'
-        );
+        const geomErrorMessage = geomError.message || '';
+        if (
+          geomErrorMessage.includes('schema cache') ||
+          geomErrorMessage.includes('function') ||
+          geomErrorMessage.includes('not found')
+        ) {
+          alert(
+            'Error submitting report: Database functions not found in schema cache.\n\n' +
+              'Please ensure you have run the database migration\n' +
+              '(supabase_migrations.sql) in your Supabase SQL Editor.\n\n' +
+              'The migration file creates the following functions:\n' +
+              '- insert_report()\n' +
+              '- create_point()'
+          );
+        } else {
+          alert(
+            'Error submitting report: ' +
+              geomError.message +
+              '\n\nPlease ensure you have run the database migration (supabase_migrations.sql) in your Supabase SQL Editor.'
+          );
+        }
         setLoading(false);
         return;
       }

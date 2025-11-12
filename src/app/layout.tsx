@@ -4,8 +4,8 @@ import '../styles/map.css';
 import '../styles/posts.css';
 
 export const metadata: Metadata = {
-  title: 'NovaOCC - Orange County Crime Mapping & Safety Platform',
-  description: 'Community-driven crime mapping and safety reporting platform',
+  title: 'Cora - Safety Platform',
+  description: 'Community-driven crime mapping ',
 };
 
 export default function RootLayout({
@@ -19,4 +19,3 @@ export default function RootLayout({
     </html>
   );
 }
-

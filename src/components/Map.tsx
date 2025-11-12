@@ -22,11 +22,8 @@ export default function Map({ reports }: MapProps) {
   const [mapLoaded, setMapLoaded] = useState(false);
 
   useEffect(() => {
-    // For now, we'll use a simple Leaflet map or create a basic map visualization
-    // You can integrate with Leaflet, Mapbox, or Google Maps later
+    // Integrate Berenice's map here
     if (mapRef.current && !mapLoaded) {
-      // Initialize a basic map container
-      // This is a placeholder - you'll want to integrate with a proper mapping library
       setMapLoaded(true);
     }
   }, [mapLoaded]);

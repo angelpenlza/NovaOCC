@@ -28,7 +28,23 @@ CREATE OR REPLACE FUNCTION insert_report(
 RETURNS uuid AS $$
 DECLARE
   report_id uuid;
+  current_user_id uuid;
 BEGIN
+  -- Get the current authenticated user
+  current_user_id := auth.uid();
+  
+  -- Validate that the user is authenticated
+  IF current_user_id IS NULL THEN
+    RAISE EXCEPTION 'User must be authenticated to create a report';
+  END IF;
+  
+  -- Validate that the user_id matches the authenticated user
+  -- This ensures users can only create reports for themselves
+  IF p_user_id != current_user_id THEN
+    RAISE EXCEPTION 'User can only create reports for themselves';
+  END IF;
+  
+  -- Insert the report
   INSERT INTO reports (
     user_id,
     category,
