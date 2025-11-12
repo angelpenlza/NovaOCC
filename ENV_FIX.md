@@ -104,3 +104,4 @@ If you're still seeing errors after fixing:
 - The URL is actually a URL (starts with `https://`)
 - The key is actually a key (long JWT string)
 
+
